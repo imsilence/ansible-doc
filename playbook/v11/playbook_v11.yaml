@@ -1,0 +1,5 @@
+---
+- hosts: mytest
+  gather_facts: False
+  roles:
+    - { role: webservers}

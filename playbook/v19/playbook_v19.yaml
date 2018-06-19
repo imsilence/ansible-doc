@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    - name: block task
+      block:
+        - debug:
+            msg: 'start'
+        - ping:
+        - debug:
+            msg: 'end'
+
+      when: inventory_hostname == 'localhost'

@@ -1,0 +1,10 @@
+---
+- hosts: mytest
+  tasks:
+    - include_tasks: '{{name}}_01.yaml'
+    - include_tasks: '{{name}}_02.yaml'
+      vars:
+        name: include
+    - include_tasks: '{{name}}_02.yaml'
+      vars:
+        name: import

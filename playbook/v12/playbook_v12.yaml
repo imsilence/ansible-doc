@@ -1,0 +1,5 @@
+---
+- hosts: mytest
+  tasks:
+    - debug:
+        msg: "{{ ansible_version }}"

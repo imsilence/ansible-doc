@@ -1,0 +1,6 @@
+---
+- hosts: mytest
+  roles:
+    - { role: "common", tags: ['common']}
+    - { role: "webservers", tags: ['webservers']}
+    - { role: "databases", tags: ['databases']}

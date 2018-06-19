@@ -1,0 +1,8 @@
+---
+- name: loop control loop_var
+  debug:
+    msg: " task {{ outer_item }} - {{ item }}"
+  loop:
+    - a
+    - b
+    - c

@@ -1,0 +1,9 @@
+---
+- hosts: mytest
+  vars_files:
+    - users.yaml
+  become: yes
+  tasks:
+    - name: password
+      debug:
+        msg: "{{ username }}:{{ password}}"

@@ -1,0 +1,28 @@
+---
+- hosts: mytest
+  remote_user: root
+  vars:
+    name_01: value_01
+    name_02: value_02
+    name_03: value_03
+  tasks:
+    - name: task_01
+      ping:
+    - name: task_02
+      command: "sleep 10"
+      notify:
+        - handler_01
+    - name: task_03
+      command: "sleep 10"
+      remote_user: silence
+    - name: task_04
+      command: "sleep 10"
+      remote_user: silence
+      become: yes
+      become_user: root
+      become_method: sudo
+    - name: task_05
+      shell: "echo `date` >> /tmp/template_command.log"
+  handlers:
+    - name: handler_01
+      shell: "echo `date` >> /tmp/template_handle.log"

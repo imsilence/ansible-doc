@@ -1,0 +1,45 @@
+---
+- hosts: all
+  gather_facts: False
+  vars_files:
+    - ['{{ ansible_os_family  }}.yaml', 'defaults.yaml']
+  tasks:
+    - name: when
+      debug:
+        msg: 'is localhost'
+      when: inventory_hostname == 'localhost'
+
+    - name: python
+      command: python -c "import sys; sys.exit(1);"
+      register: result
+      ignore_errors: True
+      when: inventory_hostname == 'mytest'
+
+    - name: when result
+      debug:
+        msg: 'python is {{ result.msg }}'
+      when: result is failed
+
+    - name: loop when
+      debug:
+        msg: 'loop {{ item }}'
+      loop: [1, 2, 3, 4, 5]
+      when: item < 3
+
+    - include_tasks: tasks.yaml
+      when: inventory_hostname != 'localhost'
+
+    - debug:
+        msg: '{{ ansible_os_family }}-{{ var_from }}'
+
+    - name: loop query
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ query('first_found', {'files' : files, 'paths' : paths}) }}"
+      vars:
+        files:
+          - name
+          - hostname
+        paths:
+          - /home/
+          - /etc/

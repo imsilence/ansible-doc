@@ -1,0 +1,3 @@
+---
+- name: task_02
+  shell: echo "task_02 {{name}} `date`" >> /tmp/playbook_v3.log

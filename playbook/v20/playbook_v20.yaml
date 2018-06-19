@@ -1,0 +1,22 @@
+---
+- hosts: mytest
+  tasks:
+    - name: exception
+      block:
+        - command: python -c "import sys; sys.exit(1);"
+      rescue:
+        - debug:
+            msg: 'rescue 1'
+      always:
+        - debug:
+            msg: "always 1"
+
+    - name: exception
+      block:
+        - command: python -c "import sys; sys.exit(0);"
+      rescue:
+        - debug:
+            msg: 'rescue 2'
+      always:
+        - debug:
+            msg: "always 2"

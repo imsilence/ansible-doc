@@ -1,0 +1,28 @@
+---
+- hosts: mytest
+  gather_facts: False
+  tasks:
+    - debug:
+        msg: "{{ group_names }}"
+    - debug:
+        msg: "{{ groups }}"
+    - debug:
+        msg: "{{ inventory_hostname }}"
+    - debug:
+        msg: "{{ ansible_hostname }}"
+    - debug:
+        msg: "{{ inventory_hostname_short }}"
+    - debug:
+        msg: "{{ ansible_play_batch }}"
+    - debug:
+        msg: "{{ ansible_play_hosts }}"
+    - debug:
+        msg: "{{ ansible_playbook_python }}"
+    - debug:
+        msg: "{{ inventory_dir }}"
+    - debug:
+        msg: "{{ inventory_file }}"
+    - debug:
+        msg: "{{ playbook_dir }}"
+    - debug:
+        msg: "{{ ansible_check_mode }}"

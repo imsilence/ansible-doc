@@ -1,0 +1,11 @@
+---
+- hosts: mytest
+  gather_facts: False
+  tasks:
+    - name: ip addr1
+      shell: ip addr1
+      register: result
+      ignore_errors: True
+    - debug:
+        msg: "{{ result.stderr }}"
+      when: result.rc != 0

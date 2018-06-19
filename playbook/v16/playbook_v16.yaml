@@ -1,0 +1,13 @@
+---
+- hosts: mytest
+  gather_facts: False
+  vars:
+    - tmp_dir: /tmp/playbook/
+  vars_files:
+    - externals_vars.yaml
+  tasks:
+    - debug:
+        msg: "{{ tmp_dir }}"
+
+    - debug:
+        msg: "{{ username }}-{{ password }}"

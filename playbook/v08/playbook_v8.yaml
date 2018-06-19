@@ -1,0 +1,9 @@
+---
+- hosts: mytest
+  roles:
+    - { role: common }
+    - { role: common}
+    - { role: webservers, index: 1}
+    - { role: webservers, index: 2}
+    - { role: databases}
+    - { role: databases}

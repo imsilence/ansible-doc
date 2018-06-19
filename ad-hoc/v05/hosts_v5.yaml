@@ -1,0 +1,11 @@
+---
+all:
+  hosts:
+    localhost:
+  children:
+      webserver:
+          hosts:
+            mytest:
+      test:
+        children:
+          webserver:

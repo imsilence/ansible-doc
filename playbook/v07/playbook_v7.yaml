@@ -1,0 +1,15 @@
+---
+- hosts: mytest
+  tasks:
+    - import_role:
+        name: "common"
+      tags:
+        - common
+    - include_role:
+        name: "webservers"
+      tags:
+        - webservers
+    - include_role:
+        name: "webservers"
+      tags:
+        - databases

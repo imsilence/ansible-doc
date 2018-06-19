@@ -1,0 +1,115 @@
+---
+- hosts: mytest
+  vars:
+    user_list:
+      - kk
+      - silence
+  tasks:
+    - name: loop
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - first
+        - second
+
+    - name: loop vars
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ user_list }}"
+
+    - name: loop query
+      debug:
+        msg: "{{ item }}"
+
+      loop: "{{ query('nested', ['a', 'b'], ['x', 'y', 'z']) }}"
+
+    - name: loop lookup
+      debug:
+        msg: "{{ item }}"
+
+      loop: "{{ lookup('nested', ['a', 'b'], ['x', 'y', 'z'], withlist=True) }}"
+
+    - name: do-until
+      command: python -c "import sys,random; sys.exit(random.randint(0, 3));"
+      ignore_errors: True
+      register: result
+      until: result is success
+      retries: 3
+      delay: 3
+
+    - name: loop register
+      command: "echo {{ item }}"
+      loop: "{{ user_list }}"
+      register: echo
+      changed_when: echo.stdout != 'kk'
+
+    - name: loop register result
+      debug:
+        msg: "{{ item.cmd }} is success"
+      loop: "{{ echo.results }}"
+      when: item.rc == 0
+
+    - name: all host
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ groups['all'] }}"
+
+    - name: batch host
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ ansible_play_batch   }}"
+
+    - name: loop query
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ query('inventory_hostnames', 'all') }}"
+
+    - include_tasks: tasks.yaml
+      loop: [1, 2, 3]
+      loop_control:
+        loop_var: outer_item
+
+    - name: loop control label
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - name : kk
+          age: 30
+        - name : silence
+          age: 31
+
+    - name: loop control label
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - name : kk
+          age: 30
+        - name : silence
+          age: 31
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: loop control label
+      debug:
+        msg: "{{ item.name }}"
+      loop:
+        - name : kk
+          age: 30
+        - name : silence
+          age: 31
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: loop control pause
+      debug:
+        msg: "{{ item }}"
+      loop: [1, 2, 3]
+      loop_control:
+        pause: 3
+
+    - name: loop control index
+      debug:
+        msg: "{{ index }} : {{ item }}"
+      loop: [1, 2, 3]
+      loop_control:
+        index_var: index

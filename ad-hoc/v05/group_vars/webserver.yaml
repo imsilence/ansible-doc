@@ -1,0 +1,5 @@
+---
+ansible_connect: smart
+ansible_port: 22
+ansible_become_user: root
+ansible_python_interpreter: "/bin/env python2.6"
